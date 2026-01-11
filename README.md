@@ -82,7 +82,7 @@ python main.py
   <tr>
     <td align="center"><a href="https://github.com/gonezc"><img src="https://github.com/gonezc.png" width="50" height="50" alt="gonezc" /><br /><sub><b>gonezc</b></sub></a></td>
     <td align="center"><a href="https://github.com/changan593"><img src="https://github.com/changan593.png" width="50" height="50" alt="changan593" /><br /><sub><b>changan593</b></sub></a></td>
-    <td align="center"><a href="https://claude.ai"><img src="https://www.anthropic.com/images/icons/apple-touch-icon.png" width="50" height="50" alt="Claude" /><br /><sub><b>Claude</b></sub></a></td>
+    <td align="center"><a href="https://claude.ai"><img src="https://avatars.githubusercontent.com/u/81847?v=4" width="50" height="50" alt="Claude" /><br /><sub><b>Claude</b></sub></a></td>
   </tr>
 </table>
 
