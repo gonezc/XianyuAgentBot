@@ -16,10 +16,10 @@
 
 | 模块 | 技术栈 |
 |------|--------|
-| LLM | 通义千问 / OpenAI 兼容接口 |
+| LLM | OpenAI 接口规范 |
 | 工作流 | LangGraph |
 | 向量检索 | FAISS |
-| 情感分析 | Erlangshen-Roberta-110M-Sentiment |
+| 情感分析 | Erlangshen-Roberta-110M-Sentiment (BERT) |
 | 数据存储 | SQLite |
 | 平台通信 | WebSocket |
 
@@ -38,7 +38,8 @@
 │   └── message_handler.py
 ├── storage/             # 数据存储
 ├── prompts/             # 提示词配置
-└── knowledge/           # 案例库
+├── knowledge/           # 案例库
+└── images/              # 效果图（不开源）
 ```
 
 ## 快速运行
@@ -79,6 +80,7 @@ python main.py
 ## 致谢
 
 - 原项目：[shaxiu/XianyuAutoAgent](https://github.com/shaxiu/XianyuAutoAgent)
+- [changan593](https://github.com/changan593)
 
 ## 声明
 
