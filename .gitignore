@@ -69,4 +69,4 @@ htmlcov/
 .tox/
 .nox/
 .hypothesis/
-.coverage.* 
+.coverage.* image/
