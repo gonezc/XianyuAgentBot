@@ -71,3 +71,4 @@ htmlcov/
 .hypothesis/
 .coverage.*
 image/
+images/
