@@ -14,14 +14,14 @@
 
 ## 技术框架
 
-| 模块 | 技术栈 |
-|------|--------|
-| LLM | OpenAI 接口规范 |
-| 工作流 | LangGraph |
-| 向量检索 | FAISS |
-| 情感分析 | Erlangshen-Roberta-110M-Sentiment (BERT) |
-| 数据存储 | SQLite |
-| 平台通信 | WebSocket |
+| 模块     | 技术栈                            |
+| -------- | --------------------------------- |
+| LLM调用  | Chat Completions API              |
+| 工作流   | LangGraph                         |
+| 向量检索 | FAISS                             |
+| 情感分析 | Erlangshen-Roberta-110M-Sentiment |
+| 数据存储 | SQLite                            |
+| 平台通信 | WebSocket                         |
 
 项目结构：
 
@@ -75,6 +75,12 @@ python main.py
 ## 效果图
 
 <!-- 效果图待补充 -->
+
+## 贡献者
+
+<a href="https://github.com/Gone"><img src="https://github.com/Gone.png" width="50" height="50" alt="Gone" /></a>
+<a href="https://github.com/changan593"><img src="https://github.com/changan593.png" width="50" height="50" alt="changan593" /></a>
+<a href="https://github.com/anthropics"><img src="https://github.com/anthropics.png" width="50" height="50" alt="Claude" /></a>
 
 ## 致谢
 
