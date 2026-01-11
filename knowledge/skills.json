@@ -1,0 +1,48 @@
+[
+  {
+    "name": "Python",
+    "level": "精通",
+    "description": "5年开发经验，熟练使用各类库和框架"
+  },
+  {
+    "name": "爬虫开发",
+    "level": "精通",
+    "description": "Scrapy、Selenium、Playwright，反爬处理经验丰富"
+  },
+  {
+    "name": "数据分析",
+    "level": "精通",
+    "description": "Pandas、NumPy、数据可视化（Matplotlib、Pyecharts）"
+  },
+  {
+    "name": "机器学习",
+    "level": "熟练",
+    "description": "Scikit-learn、XGBoost，常见算法原理与调参"
+  },
+  {
+    "name": "深度学习",
+    "level": "熟练",
+    "description": "PyTorch、TensorFlow，CNN/RNN/Transformer"
+  },
+  {
+    "name": "Web开发",
+    "level": "熟练",
+    "description": "Flask、Django、FastAPI，前后端开发"
+  },
+  {
+    "name": "数据库",
+    "level": "熟练",
+    "description": "MySQL、MongoDB、Redis，SQL优化"
+  },
+  {
+    "name": "自动化脚本",
+    "level": "精通",
+    "description": "办公自动化、定时任务、批量处理"
+  }
+]
+
+
+
+
+
+

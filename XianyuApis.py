@@ -137,17 +137,29 @@ class XianyuApis:
             time.sleep(0.5)
             return self.hasLogin(retry_count + 1)
 
-    def get_token(self, device_id, retry_count=0):
-        if retry_count >= 2:  # 最多重试3次
-            logger.warning("获取token失败，尝试重新登陆")
+    def get_token(self, device_id, retry_count=0, relogin_count=0):
+        # 检查总重试次数，避免无限循环
+        max_total_retries = 10
+        if relogin_count >= 3:  # 最多重新登录3次
+            logger.error("🔴 多次重新登录后仍然失败，可能触发了闲鱼风控")
+            logger.error("建议操作：")
+            logger.error("  1. 等待30-60分钟后再试")
+            logger.error("  2. 重新获取Cookie（退出登录→重新登录→F12复制Cookie）")
+            logger.error("  3. 考虑使用测试账号而非主账号")
+            logger.error("🔴 程序即将退出")
+            sys.exit(1)
+        
+        if retry_count >= 5:  # 增加到5次重试
+            logger.warning(f"获取token失败，尝试重新登陆（第{relogin_count + 1}次重新登录）")
             # 尝试通过hasLogin重新登录
             if self.hasLogin():
                 logger.info("重新登录成功，重新尝试获取token")
-                return self.get_token(device_id, 0)  # 重置重试次数
+                time.sleep(3)  # 重新登录后等待3秒
+                return self.get_token(device_id, 0, relogin_count + 1)  # 增加重新登录计数
             else:
                 logger.error("重新登录失败，Cookie已失效")
                 logger.error("🔴 程序即将退出，请更新.env文件中的COOKIES_STR后重新启动")
-                sys.exit(1)  # 直接退出程序
+                sys.exit(1)
             
         params = {
             'jsv': '2.7.2',
@@ -183,23 +195,34 @@ class XianyuApis:
                 # 检查ret是否包含成功信息
                 if not any('SUCCESS::调用成功' in ret for ret in ret_value):
                     logger.warning(f"Token API调用失败，错误信息: {ret_value}")
+                    
+                    # 检查是否是风控错误（被挤爆啦）
+                    if any('被挤爆' in str(ret) or 'RGV587_ERROR' in str(ret) for ret in ret_value):
+                        # 风控错误，使用指数退避策略
+                        wait_time = min(5 * (2 ** retry_count), 60)  # 5秒、10秒、20秒、40秒...最多60秒
+                        logger.warning(f"检测到闲鱼风控限流，等待{wait_time}秒后重试（第{retry_count + 1}次，重新登录次数：{relogin_count}）")
+                        time.sleep(wait_time)
+                    else:
+                        # 其他错误，短暂等待
+                        time.sleep(0.5)
+                    
                     # 处理响应中的Set-Cookie
                     if 'Set-Cookie' in response.headers:
-                        logger.debug("检测到Set-Cookie，更新cookie")  # 降级为DEBUG并简化
+                        logger.debug("检测到Set-Cookie，更新cookie")
                         self.clear_duplicate_cookies()
-                    time.sleep(0.5)
-                    return self.get_token(device_id, retry_count + 1)
+                    
+                    return self.get_token(device_id, retry_count + 1, relogin_count)
                 else:
                     logger.info("Token获取成功")
                     return res_json
             else:
                 logger.error(f"Token API返回格式异常: {res_json}")
-                return self.get_token(device_id, retry_count + 1)
+                return self.get_token(device_id, retry_count + 1, relogin_count)
                 
         except Exception as e:
             logger.error(f"Token API请求异常: {str(e)}")
             time.sleep(0.5)
-            return self.get_token(device_id, retry_count + 1)
+            return self.get_token(device_id, retry_count + 1, relogin_count)
 
     def get_item_info(self, item_id, retry_count=0):
         """获取商品信息，自动处理token失效的情况"""

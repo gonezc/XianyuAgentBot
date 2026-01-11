@@ -3,3 +3,17 @@ websockets==13.1
 loguru==0.7.3
 python-dotenv==1.0.1
 requests==2.32.3
+
+# LangGraph 依赖
+langchain>=0.3.0
+langchain-openai>=0.2.0
+langgraph>=0.2.0
+langgraph-checkpoint-sqlite>=3.0.0  # SQLite持久化
+
+# 情感分析（使用 Erlangshen-Roberta-110M-Sentiment 模型）
+transformers>=4.30.0
+torch>=2.0.0
+
+# 向量检索（推荐安装，提升检索效果）
+faiss-cpu>=1.7.4
+numpy>=1.24.0

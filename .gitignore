@@ -1,7 +1,25 @@
 # 环境变量文件（包含敏感信息）
 .env
-# 提示词文件
-*_prompt.txt
+
+# Claude Code
+.claude/
+
+# 数据和缓存
+data/
+conversations/
+nul
+
+# 知识库缓存（保留 cases.json 和 skills.json）
+knowledge/.faiss_index
+knowledge/.embeddings_cache.pkl
+
+# 文档和工具脚本
+*.md
+!README.md
+figs4md/
+remove_emoji.py
+run_local_chat.bat
+tests/
 # Python缓存文件
 __pycache__/
 *.py[cod]
