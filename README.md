@@ -74,7 +74,27 @@ python main.py
 
 ## 效果图
 
-<!-- 效果图待补充 -->
+![开场](images/开场.png)
+
+<div align="center">开场</div>
+
+![需求收集](images/需求收集.png)
+
+<div align="center">需求收集</div>
+
+![定价议价](images/定价议价.png)
+
+<div align="center">询价议价</div>
+
+![下单引导](images/下单引导.png)
+
+![后台通知](images/后台通知.png)
+
+<div align="center">成交引导</div>
+
+![日志](images/日志.png)
+
+<div align="center">后台日志</div>
 
 ## 贡献者
 

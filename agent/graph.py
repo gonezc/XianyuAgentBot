@@ -123,7 +123,7 @@ def _load_prompt():
     if os.path.exists(prompt_path):
         with open(prompt_path, "r", encoding="utf-8") as f:
             return f.read()
-    return "你是一名专业的技术服务顾问，专注于软件代做和数学建模服务。"
+    return "你是一名专业的客服，专注于软件开发和程序定制服务。"
 
 
 def _load_knowledge():
@@ -312,7 +312,7 @@ def analyze_context(state: AgentState) -> dict:
 # 策略模板（简洁明确）
 STRATEGY_TEMPLATES = {
     # GREETING阶段
-    "greeting": "回复：想做啥项目？软件开发还是数学建模？",
+    "greeting": "回复：想做啥项目？有啥需求可以说说",
 
     # REQUIREMENT阶段（不绑定工具，无法调用）
     "ask_type": "追问项目类型，不报价",
@@ -324,8 +324,8 @@ STRATEGY_TEMPLATES = {
     "search_and_decide": """先调用 search_cases(query='{query}') 搜索案例，等待返回结果后评估底价：
 
 【底价计算】（found=true时，必须严格按此计算！）
-- 底价 = 案例最低价（不打折！）
-- 例如：案例价格范围3200-3400，底价就是3200
+- 底价 = price_range[0]（返回结果中的最低价，不打折！）
+- 例如：price_range=[2000, 4000]，底价就是2000
 - 功能更多可上浮10-30%，工期紧（<5天）可上浮20%
 
 【决策】
@@ -333,7 +333,7 @@ STRATEGY_TEMPLATES = {
 - 预期 < 底价: 回复"有点低，这个最少xxx"（给出底价，不要编数字！）
 - found=false: 调用 send_reminder(notice_type='handover')，回复"这个比较特殊，加微信详聊"
 
-【重要】底价必须基于案例价格，禁止编造数字！""",
+【重要】底价必须基于 price_range[0]，禁止编造数字！""",
 
     # NEGOTIATION阶段（必须基于已报价格！）
     "bargain_1": "首次议价：之前报价{quoted_price}，底价{floor_price}，可优惠5-10%。强调包含完整源码+部署文档+7天售后",
@@ -346,7 +346,7 @@ STRATEGY_TEMPLATES = {
 1. 让客户点"我想要"下单
 2. 告知会改价到约定金额
 3. 给微信号详聊需求
-4. 调用 send_reminder(message='即将成交:{summary}', notice_type='reminder')"""
+4. 调用 send_reminder(message='{summary}', notice_type='reminder')"""
 }
 
 
@@ -427,7 +427,14 @@ def select_strategy(state: AgentState) -> dict:
             )
 
     elif stage == Stage.CLOSING:
-        summary = f"{project_type} {expected_price}"
+        # 构建详细的成交通知
+        project_name = requirements.get("project_name", "") or project_type
+        expected_time = requirements.get("expected_time", "") or details.get("deadline", "")
+        quoted_price = state.get("quoted_price", "")
+        user_name = state.get("user_name", "")
+        item_desc = state.get("item_desc", "")
+
+        summary = f"【即将成交】\n用户: {user_name}\n商品: {item_desc}\n项目: {project_name}\n技术栈: {tech_stack}\n功能: {features}\n价格: {quoted_price or expected_price}\n工期: {expected_time}"
         strategy = STRATEGY_TEMPLATES["closing"].format(summary=summary)
 
     else:
